@@ -1,30 +1,39 @@
-# React + TypeScript + Vite
+## Rick And Morty GraphQL App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a client application which consumes the Rick and Morty GraphQL API.
 
-Currently, two official plugins are available:
+I've used [GraphQL Code Generator](https://the-guild.dev/graphql/codegen) to generate type definitions automatically.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+A feature based folder structure has been implemented to keep things organized.
 
-## Expanding the ESLint configuration
+**Live demo is [here](https://gql-rm.jisan.io/)**.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Technologies Used:
 
-- Configure the top-level `parserOptions` property like this:
+- [React](https://react.dev/)
+- [TanStack Router](https://tanstack.com/router/latest)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [GraphQL Code Generator](https://the-guild.dev/graphql/codegen)
+- [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [Vercel](https://vercel.com/)
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+## Development
+
+First, we need to install the dependencies:
+
+```bash
+pnpm install
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+And run the project in development mode:
+
+```bash
+pnpm run dev
+```
+
+## The Rick and Morty API
+
+This is a really cool public API which provides you the characters, locations and episodes. It has both Rest and GraphQL implementations. So, you can use it to learn and explore new techniques, libraries etc.
+
+You can check it out [here](https://rickandmortyapi.com/).
