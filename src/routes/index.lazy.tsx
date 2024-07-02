@@ -1,49 +1,48 @@
-import { gql, useQuery } from "@apollo/client";
 import { createLazyFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { useCharactersQuery } from "../components/characters/characters.generated";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
 });
 
-const GET_CHARACTERS = gql`
-  query Characters($name: String) {
-    characters(filter: { name: $name }) {
-      info {
-        count
-        pages
-        next
-        prev
-      }
-      results {
-        name
-        species
-        status
-        type
-        gender
-        origin {
-          name
-        }
-        location {
-          name
-        }
-        image
-      }
-    }
-  }
-`;
-
 function Index() {
-  const { loading, error, data } = useQuery(GET_CHARACTERS);
+  const [search, setSearch] = useState("");
+  const { loading, error, data } = useCharactersQuery({
+    variables: { name: search },
+  });
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error : {error.message}</p>;
+  const characters = data?.characters?.results;
 
-  return data.characters.results.map(({ id, name, status }) => (
-    <div key={id}>
-      <h3>{name}</h3>
-      <br />
-      <p>{status}</p>
-      <br />
+  return (
+    <div className="p-2">
+      <div>
+        <input
+          className="border border-gray-500 mb-2 px-1.5 py-1"
+          value={search}
+          onChange={handleSearch}
+          placeholder="search here"
+        />
+      </div>
+      {loading && <p>Loading...</p>}
+      {error && <p>Error : {error.message}</p>}
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 justify-start">
+        {characters && characters?.length > 0
+          ? characters.map((character, index) => (
+              <div key={character?.id ?? index} className="w-full">
+                <img src={character?.image || ""} alt="Character Image" />
+                <p>
+                  {character?.name ?? "No name: something is wrong"} -&nbsp;
+                  <span>{character?.gender}</span> -{" "}
+                  <span>{character?.species}</span>
+                </p>
+              </div>
+            ))
+          : !loading && <p>No characters found</p>}
+      </div>
     </div>
-  ));
+  );
 }
