@@ -23,3 +23,21 @@ query Characters($name: String) {
     }
   }
 }
+
+query Character($id: ID!) {
+  character(id: $id) {
+    id
+    name
+    species
+    status
+    type
+    gender
+    origin {
+      name
+    }
+    location {
+      name
+    }
+    image
+  }
+}

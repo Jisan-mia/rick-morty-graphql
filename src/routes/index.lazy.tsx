@@ -1,4 +1,4 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { Link, createLazyFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { useCharactersQuery } from "../components/characters/characters.generated";
 
@@ -32,14 +32,21 @@ function Index() {
       <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 justify-start">
         {characters && characters?.length > 0
           ? characters.map((character, index) => (
-              <div key={character?.id ?? index} className="w-full">
+              <Link
+                to="/characters/$id"
+                params={{
+                  id: character?.id || "",
+                }}
+                key={character?.id ?? index}
+                className="w-full"
+              >
                 <img src={character?.image || ""} alt="Character Image" />
                 <p>
                   {character?.name ?? "No name: something is wrong"} -&nbsp;
                   <span>{character?.gender}</span> -{" "}
                   <span>{character?.species}</span>
                 </p>
-              </div>
+              </Link>
             ))
           : !loading && <p>No characters found</p>}
       </div>
